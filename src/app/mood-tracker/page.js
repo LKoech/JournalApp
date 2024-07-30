@@ -1,6 +1,6 @@
 'use client';
 import React, { useContext, useState, useEffect } from 'react';
-import { Select, Typography } from 'antd';
+import { Select, Typography, Spin, Alert } from 'antd';
 import { EntriesContext } from '../../context/EntriesContext';
 import { Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
@@ -12,6 +12,9 @@ const MoodTrackerPage = () => {
   const { entries } = useContext(EntriesContext);
   const [timePeriod, setTimePeriod] = useState('week');
   const [filteredEntries, setFilteredEntries] = useState([]);
+  const [suggestion, setSuggestion] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const now = new Date();
@@ -51,6 +54,34 @@ const MoodTrackerPage = () => {
     return acc;
   }, {});
 
+  const prominentMood = Object.keys(moodCount).reduce((a, b) => (moodCount[a] > moodCount[b] ? a : b), '');
+
+  useEffect(() => {
+    if (prominentMood) {
+      setLoading(true);
+      fetch('/api/getMoodSuggestion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ mood: prominentMood }),
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            throw new Error(data.error);
+          }
+          setSuggestion(data.suggestion);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching mood suggestion:', error);
+          setError('Failed to fetch mood suggestion');
+          setLoading(false);
+        });
+    }
+  }, [prominentMood]);
+
   const data = {
     labels: Object.keys(moodCount),
     datasets: [
@@ -79,6 +110,17 @@ const MoodTrackerPage = () => {
       <div className={styles.pieChartContainer}>
         <Pie data={data} />
       </div>
+      {loading ? (
+        <Spin tip="Fetching suggestion..." />
+      ) : error ? (
+        <Alert message="Error" description={error} type="error" showIcon />
+      ) : (
+        suggestion && (
+          <Typography.Paragraph className={styles.suggestion}>
+            <strong>Suggestion to improve your mood:</strong> {suggestion}
+          </Typography.Paragraph>
+        )
+      )}
     </div>
   );
 };
