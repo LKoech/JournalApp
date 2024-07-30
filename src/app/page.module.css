@@ -52,6 +52,7 @@
   text-align: center;
   transition: box-shadow 0.3s;
 }
+
 .card:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -110,6 +111,7 @@
 .logo {
   position: relative;
 }
+
 /* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
@@ -230,6 +232,7 @@
     transform: rotate(0deg);
   }
 }
+
 .container {
   display: flex;
   align-items: center;
@@ -256,11 +259,65 @@
   height: auto;
 }
 
-/* New styles */
 .ant-form-item-label > label {
-  color: white !important; /* Change label text to white */
+  color: white !important;
 }
 
 .ant-form-item {
-  position: relative; /* Needed for absolute positioning of asterisk */
+  position: relative;
+}
+
+/* page.module.css */
+.formContainer {
+  max-width: 600px; /* Set a max width */
+  margin: 0 auto; /* Center the form */
+  padding: 20px; /* Add some padding */
+  background-color: #fff; /* White background for the form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.entriesContainer {
+  padding: 20px;
+}
+
+.searchContainer {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.floatButton {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #1890ff;
+  color: #fff;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.moodTrackerContainer {
+  padding: 20px;
+}
+
+.pieChartContainer {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
 }

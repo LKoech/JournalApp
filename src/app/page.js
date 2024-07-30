@@ -1,4 +1,3 @@
-// src/app/page.js
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
@@ -26,22 +25,6 @@ export default function Home() {
           priority
         />
       </div>
-
-      <div className={styles.grid}>
-  <Link href="/login" className={styles.card}>
-    <h2>
-      Login <span>-&gt;</span>
-    </h2>
-    <p>Access your journal by logging in.</p>
-  </Link>
-
-  <Link href="/signup" className={styles.card}>
-    <h2>
-      Signup <span>-&gt;</span>
-    </h2>
-    <p>Create an account to start journaling.</p>
-  </Link>
-</div>
 
     </main>
   );
