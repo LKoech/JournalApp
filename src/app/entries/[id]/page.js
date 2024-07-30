@@ -4,7 +4,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useRouter, useParams } from 'next/navigation';
 import { EntriesContext } from '../../../context/EntriesContext';
-import styles from '.../page.module.css';
+import styles from '../../page.module.css';
 
 const EditEntryPage = () => {
   const { id } = useParams();
