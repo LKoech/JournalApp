@@ -47,7 +47,7 @@
 
 .card {
   padding: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid #3d3f45;
   border-radius: 8px;
   text-align: center;
   transition: box-shadow 0.3s;
@@ -241,9 +241,7 @@
   padding: 0 10%;
 }
 
-.formContainer {
-  width: 45%;
-}
+
 
 .imageContainer {
   width: 45%;
@@ -269,10 +267,10 @@
 
 /* page.module.css */
 .formContainer {
-  max-width: 600px; /* Set a max width */
+  max-width: 800px; /* Set a max width */
   margin: 0 auto; /* Center the form */
   padding: 20px; /* Add some padding */
-  background-color: #fff; /* White background for the form */
+  background-color: #96c9e9; /* White background for the form */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
@@ -321,3 +319,40 @@
   height: 300px;
   margin: 0 auto;
 }
+/* Form Label Styles */
+.formLabel {
+  color: #333; /* Set label color */
+  font-weight: bold; /* Make labels bold */
+  font-size: 16px; /* Set font size */
+  margin-bottom: 0.5rem; /* Add some space below the label */
+}
+
+
+
+/* Ensure labels are styled appropriately */
+.ant-form-item-label > label {
+  color: #333 !important; /* Set label color */
+  font-weight: bold !important; /* Make labels bold */
+  font-size: 16px !important; /* Set font size */
+  margin-bottom: 0.5rem !important; /* Add some space below the label */
+}
+
+
+/* Custom styles for the Quill editor */
+.quillEditor {
+  height: 400px; /* Increase height */
+  max-width: 100%; /* Make it responsive */
+  margin-bottom: 20px; /* Add some space below the editor */
+}
+
+.quillEditor .ql-container {
+  height: 350px; /* Adjust height of the editor container */
+}
+
+.quillEditor .ql-editor {
+  font-size: 18px; /* Increase font size */
+  line-height: 1.5; /* Adjust line height for better readability */
+}
+
+
+/* Additional styles for other components */
