@@ -1,80 +1,126 @@
 'use client';
-
-import { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Form, Button, DatePicker, Select, Upload, Input, Typography } from 'antd';
+import { PaperClipOutlined, PictureOutlined } from '@ant-design/icons';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import { Form, Input, Button, Space, Typography, Alert } from 'antd';
-import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
-import Image from 'next/image';
+import { EntriesContext } from '../../context/EntriesContext';
 import styles from '../page.module.css';
 
-const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [alert, setAlert] = useState(null);
+const { Option } = Select;
+const { Text } = Typography;
+const QuillNoSSRWrapper = dynamic(import('react-quill'), { ssr: false });
+import 'react-quill/dist/quill.snow.css';
+
+const AddEntryPage = () => {
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [date, setDate] = useState(null);
+  const [mood, setMood] = useState('');
   const router = useRouter();
+  const { addEntry } = useContext(EntriesContext);
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
+  const handleAddEntry = async () => {
+    const newEntry = {
+      id: Date.now(),
+      title,
+      content,
+      date: date ? date.toISOString() : new Date().toISOString(),
+      mood,
+    };
+    await addEntry(newEntry);
+    router.push('/entries');
+  };
 
-      const data = await response.json();
-      if (response.ok) {
-        setAlert(<Alert message="Success" description="Login successful! Redirecting..." type="success" showIcon />);
-        setTimeout(() => {
-          router.push('/entries'); // Redirect to the entries page
-        }, 2000);
-      } else {
-        setAlert(<Alert message="Error" description={data.message} type="error" showIcon />);
-      }
-    } catch (error) {
-      setAlert(<Alert message="Error" description="An unexpected error occurred. Please try again." type="error" showIcon />);
-    }
-  };  
+  const handleFileUpload = (file) => {
+    console.log('File uploaded:', file);
+    return false;
+  };
+
+  const handleImageUpload = (file) => {
+    console.log('Image uploaded:', file);
+    return false;
+  };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.formContainer}>
-        <h1 className={styles.title}>Login</h1>
-        {alert}
-        <Form onFinish={handleLogin}>
-          <Space direction="vertical" style={{ width: '100%' }}>
-            <Form.Item label={<Typography.Text style={{ color: 'white' }}>Username</Typography.Text>} required>
-              <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder='username' />
-            </Form.Item>
-            <Form.Item label={<Typography.Text style={{ color: 'white' }}>Password</Typography.Text>} required>
-              <Input.Password
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Input password"
-                iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-              />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Login
-              </Button>
-            </Form.Item>
-          </Space>
-        </Form>
-      </div>
-      <div className={styles.imageContainer}>
-        <Image
-          className={styles.logo}
-          src="/journalpng.svg"
-          alt="Journal Logo"
-          width={600}
-          height={270}
-          priority
-        />
-      </div>
+    <div className={styles.formContainer}>
+      <Form onFinish={handleAddEntry} className={styles.form}>
+        <Form.Item
+          label={<Text className={styles.formLabel}>Title</Text>}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+        >
+          <Input value={title} onChange={(e) => setTitle(e.target.value)} />
+        </Form.Item>
+        <Form.Item
+          label={<Text className={styles.formLabel}>Content</Text>}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+        >
+          <QuillNoSSRWrapper
+            value={content}
+            onChange={setContent}
+            placeholder="Start writing..."
+            modules={{
+              toolbar: [
+                [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                [{ size: [] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                ['link', 'image', 'video'],
+                ['clean'],
+              ],
+            }}
+            formats={[
+              'header', 'font', 'size',
+              'bold', 'italic', 'underline', 'strike',
+              'list', 'bullet',
+              'link', 'image', 'video',
+            ]}
+            theme="snow"
+            className={styles.quillEditor} // Add a class name for custom styling
+          />
+          <div className={styles.uploadContainer}>
+            <Upload beforeUpload={handleFileUpload} showUploadList={false}>
+              <Button icon={<PaperClipOutlined />} />
+            </Upload>
+            <Upload beforeUpload={handleImageUpload} showUploadList={false}>
+              <Button icon={<PictureOutlined />} />
+            </Upload>
+          </div>
+        </Form.Item>
+        <Form.Item
+          label={<Text className={styles.formLabel}>Date</Text>}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+        >
+          <DatePicker
+            value={date}
+            onChange={(value) => setDate(value)}
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
+        <Form.Item
+          label={<Text className={styles.formLabel}>Mood</Text>}
+          labelCol={{ span: 24 }}
+          wrapperCol={{ span: 24 }}
+        >
+          <Select value={mood} onChange={(value) => setMood(value)} style={{ width: '100%' }}>
+            <Option value="happy">Happy</Option>
+            <Option value="sad">Sad</Option>
+            <Option value="angry">Angry</Option>
+            <Option value="excited">Excited</Option>
+            <Option value="anxious">Anxious</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item wrapperCol={{ span: 24 }}>
+          <div className={styles.buttonContainer}>
+            <Button type="primary" htmlType="submit" className={styles.addButton}>Add Entry</Button>
+          </div>
+        </Form.Item>
+      </Form>
     </div>
   );
 };
 
-export default LoginPage;
+export default AddEntryPage;

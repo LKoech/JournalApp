@@ -21,7 +21,7 @@ export default function Home() {
           src="/journalpng.svg"
           alt="Journal Logo"
           width={600}
-          height={270}
+          height={200}
           priority
         />
       </div>
