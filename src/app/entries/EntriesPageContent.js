@@ -19,8 +19,8 @@ const EntriesPage = () => {
   useEffect(() => {
     const filteredEntries = entries
       .filter(entry => 
-        entry.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        entry.content.toLowerCase().includes(searchTerm.toLowerCase())
+        (entry.title?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false) || 
+        (entry.content?.toLowerCase().includes(searchTerm.toLowerCase()) ?? false)
       )
       .sort((a, b) => new Date(b.date) - new Date(a.date));
     setSortedEntries(filteredEntries);

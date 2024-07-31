@@ -270,7 +270,7 @@
   max-width: 800px; /* Set a max width */
   margin: 0 auto; /* Center the form */
   padding: 20px; /* Add some padding */
-  background-color: #96c9e9; /* White background for the form */
+  background-color: #ffffff70; /* White background for the form */
   border-radius: 8px; /* Rounded corners */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
@@ -301,7 +301,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #1890ff;
+  background-color: #333;
   color: #fff;
   font-size: 30px;
   display: flex;
@@ -354,5 +354,3 @@
   line-height: 1.5; /* Adjust line height for better readability */
 }
 
-
-/* Additional styles for other components */
