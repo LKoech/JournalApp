@@ -1,33 +1,51 @@
-import { Configuration, OpenAIApi } from 'openai';
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const apiKey = 'AIzaSyBztZIoGE1U_12Y3u5QRIlWfo2RbZym-CE';
+const genAI = new GoogleGenerativeAI(apiKey);
 
-const openai = new OpenAIApi(configuration);
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+const generationConfig = {
+  temperature: 0.7,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 256,
+};
 
 export default async function handler(req, res) {
+  console.log('Handler function called');
+
   if (req.method === 'POST') {
     const { mood } = req.body;
-
-    if (!configuration.apiKey) {
-      return res.status(500).json({
-        error: "OpenAI API key not configured, please follow instructions in README.md"
-      });
-    }
+    console.log('Received mood:', mood);
 
     try {
-      const response = await openai.createCompletion({
-        model: 'text-davinci-003',
-        prompt: `Provide some suggestions to improve mood when someone feels ${mood}.`,
-        max_tokens: 100,
+      const chatSession = model.startChat({
+        generationConfig,
+        history: [
+          {
+            role: "user",
+            parts: [{ text: "You are a helpful assistant that provides mood improvement suggestions." }],
+          },
+          {
+            role: "model",
+            parts: [{ text: "Understood. I'm here to provide helpful suggestions to improve mood. How can I assist you today?" }],
+          },
+        ],
       });
+      
 
-      const suggestion = response.data.choices[0].text.trim();
+      const prompt = `Provide a short suggestion to improve mood when someone feels ${mood}.`;
+      console.log('Prompt:', prompt);
+
+      const result = await chatSession.sendMessage(prompt);
+      const suggestion = result.response.text();
+      console.log('Generated suggestion:', suggestion);
+
       res.status(200).json({ suggestion });
     } catch (error) {
-      console.error('Error fetching suggestion from OpenAI:', error.response ? error.response.data : error.message);
-      res.status(500).json({ error: 'Failed to fetch suggestion' });
+      console.error('Error fetching suggestion from Gemini:', error);
+      res.status(500).json({ error: 'Failed to fetch suggestion', details: error.message });
     }
   } else {
     res.setHeader('Allow', ['POST']);

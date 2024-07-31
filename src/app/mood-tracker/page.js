@@ -81,6 +81,7 @@ const MoodTrackerPage = () => {
         });
     }
   }, [prominentMood]);
+  
 
   const data = {
     labels: Object.keys(moodCount),
@@ -124,5 +125,6 @@ const MoodTrackerPage = () => {
     </div>
   );
 };
+console.log('OpenAI API Key:', process.env.OPENAI_API_KEY);
 
 export default MoodTrackerPage;
