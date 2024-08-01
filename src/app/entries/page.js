@@ -40,7 +40,7 @@ const EntriesPage = () => {
           style={{ marginBottom: '20px' }}
         />
       </div>
-      <Typography.Title> Your Journal Entries</Typography.Title>
+      <Typography.Title>Your Journal Entries</Typography.Title>
       <List
         itemLayout="vertical"
         dataSource={sortedEntries}

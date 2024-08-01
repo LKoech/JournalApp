@@ -351,95 +351,86 @@
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+/* Global Layout */
 .layout {
   display: flex;
   min-height: 100vh;
 }
 
+/* Sidebar Styles */
+.sidebar {
+  width: 250px; /* Width of the sidebar */
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #f0f0f0; /* Subtle gray background */
+  padding: 20px;
+  border-top-right-radius: 15px; /* Curved top-right corner */
+  border-bottom-right-radius: 15px; /* Curved bottom-right corner */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+  z-index: 1000; /* Ensure sidebar is above the content */
+}
+
+/* Main Content Styles */
 .content {
   flex: 1;
   padding: 20px;
+  margin-left: 250px; /* Offset content to account for sidebar width */
+  background-color: #ffffff; /* Background color of content area */
+  min-height: 100vh; /* Ensure content area covers full height */
+}
+
+/* Adjustments for Smaller Screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px; /* Narrower sidebar on smaller screens */
+  }
+
+  .content {
+    margin-left: 0; /* No margin for smaller screens */
+  }
+}
+
+/* Optional Styles for Page Content */
+.page {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  margin-left: 250px; /* Offset for sidebar */
 }
 
-.addTaskContainer {
-  display: flex;
-  width: 100%;
-  max-width: var(--max-width);
-  margin-bottom: 20px;
-  justify-content: center;
-}
-
-.addTaskContainer input {
-  flex: 1;
-  margin-right: 10px;
-}
-
+/* Ensure Content Padding/Spacing */
+.addTaskContainer,
 .filterContainer {
-  display: flex;
   width: 100%;
   max-width: var(--max-width);
   margin-bottom: 20px;
-  justify-content: space-between;
 }
 
+.addTaskContainer input,
 .filterContainer .ant-select,
 .filterContainer .ant-input-affix-wrapper {
-  flex: 1;
   margin-right: 10px;
 }
 
-/* Task list */
-.taskList {
-  width: 100%;
-  max-width: var(--max-width);
-  background-color: #ffffff70;
-  border-radius: var(--border-radius);
-  padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.taskList .ant-list-item {
-  padding: 10px 0;
-  border-bottom: 1px solid #f0f0f0;
-}
-
-.taskList .ant-list-item:last-child {
-  border-bottom: none;
-}
-
-.taskList .ant-checkbox-wrapper {
-  flex: 1;
-}
-
-.taskList .ant-tag {
-  margin-left: 8px;
-}
-
-.taskList .ant-btn {
-  margin-left: 8px;
-}
-
-/* Responsive adjustments */
+/* Responsive Adjustments for Smaller Screens */
 @media (max-width: 768px) {
-  .content {
-    padding: 10px;
-    align-items: center;
+  .page {
+    margin-left: 0; /* No margin for smaller screens */
   }
-
+  
   .addTaskContainer,
   .filterContainer {
     flex-direction: column;
-    width: 100%;
   }
-
+  
   .addTaskContainer input,
   .filterContainer .ant-select,
   .filterContainer .ant-input-affix-wrapper {
     margin-bottom: 10px;
-    width: 100%;
   }
 }

@@ -1,41 +1,13 @@
 'use client';
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react'; // <-- Import useEffect here
 import { Layout, Input, Button, List, Checkbox, Tag, DatePicker, Select, Modal, Form } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, SearchOutlined } from '@ant-design/icons';
-import dynamic from 'next/dynamic';
+import moment from 'moment';
 import styles from './TodoList.module.css';
+import Confetti from 'react-confetti'; // Make sure Confetti is imported if used
 
 const { Content } = Layout;
 const { Option } = Select;
-const QuillNoSSRWrapper = dynamic(() => import('react-quill'), {
-  ssr: false,
-  loading: () => <p>Loading...</p>,
-});
-
-// Dynamically import the Confetti component
-const Confetti = dynamic(() => import('react-confetti'), {
-  ssr: false,
-  loading: () => <p>Loading...</p>,
-});
-
-// Define Quill modules and formats
-const modules = {
-  toolbar: [
-    [{ 'header': '1'}, { 'header': '2'}, { 'font': [] }],
-    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-    ['bold', 'italic', 'underline'],
-    ['link'],
-    [{ 'align': [] }],
-    ['clean']
-  ],
-};
-
-const formats = [
-  'header', 'font', 'size',
-  'bold', 'italic', 'underline',
-  'list', 'bullet', 'indent',
-  'link', 'align', 'clean'
-];
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -46,25 +18,32 @@ const TodoList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // Categories with colors
+  const hashtags = [
+    { value: 'work', label: '#Work', color: '#f50' },
+    { value: 'personal', label: '#Personal', color: '#2db7f5' },
+    { value: 'urgent', label: '#Urgent', color: '#87d068' },
+    { value: 'long-term', label: '#Long-term', color: '#108ee9' },
+  ];
+
+  // Fetch tasks from API
   useEffect(() => {
-    // Fetch tasks from API
     fetch('/api/tasks')
       .then(response => response.json())
       .then(data => setTasks(data))
       .catch(error => console.error('Error fetching tasks:', error));
   }, []);
 
+  // Save tasks to API
   useEffect(() => {
-    // Save tasks to API
     fetch('/api/tasks', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(tasks),
     }).catch(error => console.error('Error saving tasks:', error));
   }, [tasks]);
 
+  // Add a new task
   const addTask = () => {
     if (newTask.trim() !== '') {
       const newTaskObj = {
@@ -80,10 +59,12 @@ const TodoList = () => {
     }
   };
 
+  // Delete a task
   const deleteTask = (taskId) => {
     setTasks(tasks.filter((task) => task.id !== taskId));
   };
 
+  // Toggle task completion status
   const toggleComplete = (taskId) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId ? { ...task, completed: !task.completed } : task
@@ -97,11 +78,13 @@ const TodoList = () => {
     }
   };
 
+  // Edit a task
   const editTask = (task) => {
     setEditingTask(task);
     setIsModalVisible(true);
   };
 
+  // Handle task editing form submission
   const handleEditSubmit = (values) => {
     setTasks(
       tasks.map((task) =>
@@ -112,6 +95,7 @@ const TodoList = () => {
     setEditingTask(null);
   };
 
+  // Filter and search tasks
   const filteredTasks = useMemo(() => {
     return tasks
       .filter((task) => {
@@ -173,11 +157,10 @@ const TodoList = () => {
                       {task.text}
                     </span>
                   </Checkbox>
-                  {task.dueDate && <Tag color="blue">{task.dueDate.format('YYYY-MM-DD')}</Tag>}
-                  <Tag color={task.priority === 'high' ? 'red' : task.priority === 'medium' ? 'orange' : 'green'}>
-                    {task.priority}
+                  {task.dueDate && <Tag color="blue">{moment(task.dueDate).format('YYYY-MM-DD')}</Tag>}
+                  <Tag color={hashtags.find(ht => ht.value === task.category)?.color || 'default'}>
+                    {hashtags.find(ht => ht.value === task.category)?.label || 'No Category'}
                   </Tag>
-                  {task.category && <Tag>{task.category}</Tag>}
                 </List.Item>
               )}
             />
@@ -197,7 +180,7 @@ const TodoList = () => {
                 onFinish={handleEditSubmit}
               >
                 <Form.Item name="text" label="Task" rules={[{ required: true }]}>
-                  <QuillNoSSRWrapper modules={modules} formats={formats} theme="snow" />
+                  <Input.TextArea rows={4} />
                 </Form.Item>
                 <Form.Item name="dueDate" label="Due Date">
                   <DatePicker />
@@ -210,7 +193,13 @@ const TodoList = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item name="category" label="Category">
-                  <Input />
+                  <Select>
+                    {hashtags.map(ht => (
+                      <Option key={ht.value} value={ht.value}>
+                        <span style={{ color: ht.color }}>{ht.label}</span>
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" htmlType="submit">

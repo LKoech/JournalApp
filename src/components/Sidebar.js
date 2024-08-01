@@ -24,7 +24,10 @@ const Sidebar = () => {
         {isAuthenticated ? (
           <>
             <Menu.Item key="entries">
-              <Link href="/entries">Entries</Link>
+              <Link href="/EntryForm">Add Entries</Link>
+            </Menu.Item>
+            <Menu.Item key="entries">
+              <Link href="/entries">View Entries</Link>
             </Menu.Item>
             <Menu.Item key="mood-tracker">
               <Link href="/mood-tracker">Mood Tracker</Link>

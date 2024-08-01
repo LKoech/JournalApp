@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Select, Typography, Spin, Alert } from 'antd';
 import { EntriesContext } from '../../context/EntriesContext';
 import { Pie } from 'react-chartjs-2';
@@ -117,14 +117,15 @@ const MoodTrackerPage = () => {
         <Alert message="Error" description={error} type="error" showIcon />
       ) : (
         suggestion && (
-          <Typography.Paragraph className={styles.suggestion}>
-            <strong>Suggestion to improve your mood:</strong> {suggestion}
-          </Typography.Paragraph>
+          <div className={styles.suggestionBox}>
+            <Typography.Paragraph>
+              <strong>Suggestion to improve your mood:</strong> {suggestion}
+            </Typography.Paragraph>
+          </div>
         )
       )}
     </div>
   );
 };
-console.log('OpenAI API Key:', process.env.OPENAI_API_KEY);
 
 export default MoodTrackerPage;
