@@ -40,7 +40,9 @@ const EntriesPage = () => {
           style={{ marginBottom: '20px' }}
         />
       </div>
-      <Typography.Title>Your Journal Entries</Typography.Title>
+      <Typography.Title className="custom-title">
+        Your Journal Entries
+      </Typography.Title>
       <List
         itemLayout="vertical"
         dataSource={sortedEntries}
@@ -62,6 +64,11 @@ const EntriesPage = () => {
       <Button className={styles.floatButton} onClick={handleAddEntryClick}>
         +
       </Button>
+      <style jsx>{`
+        .custom-title {
+          color: #777ae8;
+        }
+      `}</style>
     </div>
   );
 };

@@ -119,7 +119,7 @@ const MoodTrackerPage = () => {
         suggestion && (
           <div className={styles.suggestionBox}>
             <Typography.Paragraph>
-              <strong>Suggestion to improve your mood:</strong> {suggestion}
+              <strong>🎉Suggestion to improve your mood:</strong> {suggestion}
             </Typography.Paragraph>
           </div>
         )

@@ -4,15 +4,15 @@
 }
 
 .content {
-  padding: 24px;
+  padding: 34px;
   margin: 0 auto;
-  max-width: 1200px; /* Center content */
+  max-width: 1100px; /* Center content */
 }
 
 .todoContainer {
   background: white;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 10px;
+  padding: 70px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -23,18 +23,18 @@
 
 .addTaskContainer {
   display: flex;
-  gap: 10px; /* Space between input and button */
+  gap: 30px; /* Space between input and button */
   margin-bottom: 16px;
 }
 
 .filterContainer {
   display: flex;
-  gap: 10px; /* Space between filter and search */
+  gap: 30px; /* Space between filter and search */
   margin-bottom: 16px;
 }
 
 .taskList {
-  margin-top: 16px;
+  margin-top: 50px;
 }
 
 .ant-modal {

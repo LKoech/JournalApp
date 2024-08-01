@@ -124,7 +124,6 @@
   position: relative;
 }
 
-/* Enable hover only on non-touch devices */
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     background: rgba(var(--card-rgb), 0.1);
@@ -142,9 +141,6 @@
   }
 }
 
-
-/* Add these styles to your globals.css or a specific CSS module */
-
 .floatButton {
   position: fixed;
   bottom: 30px;
@@ -152,7 +148,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #1890ff;
+  background-color: #777ae8;
   color: #fff;
   font-size: 30px;
   display: flex;
@@ -324,7 +320,7 @@
   position: fixed;
   bottom: 50px;
   right: 50px;
-  background-color: #1890ff;
+  background-color: #777ae8;
   color: white;
   border: none;
   width: 50px;
@@ -343,7 +339,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #1890ff;
+  background-color: #777ae8;
   color: #fff;
   font-size: 30px;
   display: flex;

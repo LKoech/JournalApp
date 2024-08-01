@@ -241,8 +241,6 @@
   padding: 0 10%;
 }
 
-
-
 .imageContainer {
   width: 45%;
   text-align: center;
@@ -301,7 +299,7 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #333;
+  background-color: #777ae8;
   color: #fff;
   font-size: 30px;
   display: flex;
@@ -382,4 +380,8 @@
 /* Style for the search container */
 .searchContainer {
   margin-bottom: 20px;
+}
+
+.custom-title {
+  color: #777ae8;
 }

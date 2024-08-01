@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <div className={styles.description}>
-        <h1>Welcome to your journal</h1>
+      <h1 className="custom-title">Welcome to your journal</h1>
       </div>
       <div className={styles.description}>
         <h2>
@@ -14,6 +14,23 @@ export default function Home() {
           thoughts.
         </h2>
       </div>
+      <Link href="/add-entry" passHref>
+        <div style={{
+          backgroundColor: '#777ae8', 
+          color: 'white',
+          borderRadius: '170px', 
+          padding: '24px',
+          textAlign: 'center',
+          cursor: 'pointer',
+          transition: 'background-color 0.3s ease',
+          margin: '20px auto',
+          width: '200px', 
+          display: 'inline-block'
+        }}>
+          Add a New Entry
+        </div>
+      </Link>
+
 
       <div className={styles.center}>
         <Image
@@ -25,7 +42,7 @@ export default function Home() {
           priority
         />
       </div>
-
+        
     </main>
   );
 }

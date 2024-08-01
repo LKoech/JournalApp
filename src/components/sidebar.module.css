@@ -26,10 +26,10 @@
 
 /* Hover and active state */
 .ant-menu-item:hover, .ant-menu-item-selected {
-  background-color: #e0e0e0; /* Lighter gray for hover/selected state */
+  background-color: #CBC3E3; /* Lighter gray for hover/selected state */
 }
 
 /* Icon color */
 .ant-menu-item-icon {
-  color: #606060; /* Subtle gray color for icons */
+  color: #CBC3E3; /* Subtle gray color for icons */
 }
