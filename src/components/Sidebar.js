@@ -29,6 +29,11 @@ const Sidebar = () => {
             <Menu.Item key="mood-tracker">
               <Link href="/mood-tracker">Mood Tracker</Link>
             </Menu.Item>
+
+            <Menu.Item key="mood-tracker">
+              <Link href="/todolist">TodoList</Link>
+            </Menu.Item>
+
             <Menu.Item key="logout" onClick={handleLogout}>
               Logout
             </Menu.Item>

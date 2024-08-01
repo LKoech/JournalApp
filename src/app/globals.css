@@ -351,3 +351,95 @@
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.addTaskContainer {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.addTaskContainer input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.filterContainer {
+  display: flex;
+  width: 100%;
+  max-width: var(--max-width);
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.filterContainer .ant-select,
+.filterContainer .ant-input-affix-wrapper {
+  flex: 1;
+  margin-right: 10px;
+}
+
+/* Task list */
+.taskList {
+  width: 100%;
+  max-width: var(--max-width);
+  background-color: #ffffff70;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.taskList .ant-list-item {
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.taskList .ant-list-item:last-child {
+  border-bottom: none;
+}
+
+.taskList .ant-checkbox-wrapper {
+  flex: 1;
+}
+
+.taskList .ant-tag {
+  margin-left: 8px;
+}
+
+.taskList .ant-btn {
+  margin-left: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content {
+    padding: 10px;
+    align-items: center;
+  }
+
+  .addTaskContainer,
+  .filterContainer {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .addTaskContainer input,
+  .filterContainer .ant-select,
+  .filterContainer .ant-input-affix-wrapper {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+}
